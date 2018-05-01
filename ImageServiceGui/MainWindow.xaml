@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageServiceGui"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="400" Width="800">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="Settings" Height="40" Width="80">
+                <Label Content="Content goes here..." />
+            </TabItem>
+            <TabItem Header="Logs" Height="40" Width="80">
+                <Label Content="Content goes here..." />
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
