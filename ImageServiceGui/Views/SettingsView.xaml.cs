@@ -20,9 +20,12 @@ namespace ImageServiceGui
     /// </summary>
     public partial class Settings : UserControl
     {
+        SettingsViewModel vm;
         public Settings()
         {
             InitializeComponent();
+            vm = new SettingsViewModel(new SettingsModel(/*new MyTelnetClient()*/));
+            DataContext = vm;
         }
     }
 }

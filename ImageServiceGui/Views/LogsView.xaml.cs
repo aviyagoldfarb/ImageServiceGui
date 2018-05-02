@@ -20,9 +20,12 @@ namespace ImageServiceGui
     /// </summary>
     public partial class Logs : UserControl
     {
+        LogsViewModel vm;
         public Logs()
         {
             InitializeComponent();
+            vm = new LogsViewModel(new LogsModel(/*new MyTelnetClient()*/));
+            DataContext = vm;
         }
     }
 }
