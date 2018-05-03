@@ -9,10 +9,12 @@
     <Grid>
         <TabControl>
             <TabItem Header="Settings" Height="40" Width="80">
-                <Label Content="Content goes here..." />
+                <local:SettingsView x:Name="SettingsView">
+                </local:SettingsView>
             </TabItem>
             <TabItem Header="Logs" Height="40" Width="80">
-                <Label Content="Content goes here..." />
+                <local:LogsView x:Name="LogsView">
+                </local:LogsView>
             </TabItem>
         </TabControl>
     </Grid>

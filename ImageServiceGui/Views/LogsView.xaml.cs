@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ImageServiceGui.Communication;
+using ImageServiceGui.Models;
+using ImageServiceGui.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,13 +21,13 @@ namespace ImageServiceGui
     /// <summary>
     /// Interaction logic for Logs.xaml
     /// </summary>
-    public partial class Logs : UserControl
+    public partial class LogsView : UserControl
     {
         LogsViewModel vm;
-        public Logs()
+        public LogsView()
         {
             InitializeComponent();
-            vm = new LogsViewModel(new LogsModel(/*new MyTelnetClient()*/));
+            vm = new LogsViewModel(new LogsModel(new ServiceTcpClient()));
             DataContext = vm;
         }
     }

@@ -54,6 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Communication\ITcpClient.cs" />
+    <Compile Include="Communication\ServiceTcpClient.cs" />
     <Compile Include="Models\ILogsModel.cs" />
     <Compile Include="Models\ISettingsModel.cs" />
     <Compile Include="Models\LogsModel.cs" />
@@ -113,8 +115,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Communication\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

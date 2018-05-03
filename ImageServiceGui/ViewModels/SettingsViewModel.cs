@@ -13,11 +13,18 @@ namespace ImageServiceGui.ViewModels
         private ISettingsModel model;
         public SettingsViewModel(ISettingsModel model)
         {
-            this.model = model; 
-            //model.PropertyChanged+=... 
+            this.model = model;
+            model.PropertyChanged +=
+                delegate (Object sender, PropertyChangedEventArgs e)
+                {
+                    NotifyPropertyChanged("VM_" + e.PropertyName);
+                };
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        //public void NotifyPropertyChanged(string propName) {...}
+        public void NotifyPropertyChanged(string propName)
+        {
+
+        }
 
     }
 }

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageServiceGui.Models
+namespace ImageServiceGui.Communication
 {
-    interface ISettingsModel : INotifyPropertyChanged
+    interface ITcpClient
     {
-        // connection to the service 
         void Connect(string ip, int port);
+        void Write(string command);
+        string Read();  // blocking call 
         void Disconnect();
-        void Start();
-
     }
 }

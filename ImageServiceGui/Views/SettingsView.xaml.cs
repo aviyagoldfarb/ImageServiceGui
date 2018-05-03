@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ImageServiceGui.Communication;
+using ImageServiceGui.Models;
+using ImageServiceGui.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,13 +21,13 @@ namespace ImageServiceGui
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : UserControl
+    public partial class SettingsView : UserControl
     {
         SettingsViewModel vm;
-        public Settings()
+        public SettingsView()
         {
             InitializeComponent();
-            vm = new SettingsViewModel(new SettingsModel(/*new MyTelnetClient()*/));
+            vm = new SettingsViewModel(new SettingsModel(new ServiceTcpClient()));
             DataContext = vm;
         }
     }

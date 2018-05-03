@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ImageServiceGui.Settings"
+﻿<UserControl x:Class="ImageServiceGui.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -37,5 +37,7 @@
         <TextBlock Grid.Row="4" Padding="3" Margin="3">Thumbnail Size:</TextBlock>
 
         <Button x:Name="btnStart" Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="2" Click="btnStart_Click" Margin="5" Padding="5">Start Game</Button>
+    
+        
     </Grid>
 </UserControl>
