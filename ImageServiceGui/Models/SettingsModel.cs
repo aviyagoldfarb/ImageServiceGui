@@ -1,6 +1,7 @@
 ﻿using ImageServiceGui.Communication;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,17 @@ namespace ImageServiceGui.Models
 
         private ITcpClient tcpClient;
         private volatile Boolean stop;
+
+        private ObservableCollection<KeyValuePair<string,string>> settings/* = new ObservableCollection<KeyValuePair<string, string>>()*/;
+        public ObservableCollection<KeyValuePair<string, string>> Settings
+        {
+            get { return settings; }
+            set
+            {
+                settings = value;
+                NotifyPropertyChanged("Name");
+            }
+        }
 
         public SettingsModel(ITcpClient tcpClient)
         {

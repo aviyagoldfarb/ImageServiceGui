@@ -10,6 +10,13 @@ namespace ImageServiceGui.ViewModels
 {
     class LogsViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+
         private ILogsModel model;
         public LogsViewModel(ILogsModel model)
         {
@@ -20,10 +27,6 @@ namespace ImageServiceGui.ViewModels
                     NotifyPropertyChanged("VM_" + e.PropertyName);
                 }; 
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged(string propName)
-        {
-
-        }
+        
     }
 }
