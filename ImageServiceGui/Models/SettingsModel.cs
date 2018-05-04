@@ -25,7 +25,7 @@ namespace ImageServiceGui.Models
             set
             {
                 settings = value;
-                NotifyPropertyChanged("Name");
+                NotifyPropertyChanged("Settings");
             }
         }
 

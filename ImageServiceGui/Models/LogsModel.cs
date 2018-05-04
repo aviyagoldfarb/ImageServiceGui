@@ -25,7 +25,7 @@ namespace ImageServiceGui.Models
             set
             {
                 logs = value;
-                NotifyPropertyChanged("Name");
+                NotifyPropertyChanged("Logs");
             }
         }
 

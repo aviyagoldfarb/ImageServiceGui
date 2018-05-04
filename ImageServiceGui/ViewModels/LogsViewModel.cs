@@ -1,6 +1,7 @@
 ﻿using ImageServiceGui.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,15 @@ namespace ImageServiceGui.ViewModels
                     NotifyPropertyChanged("VM_" + e.PropertyName);
                 }; 
         }
-        
+        private ObservableCollection<KeyValuePair<string, string>> vm_logs/* = new ObservableCollection<KeyValuePair<string, string>>()*/;
+        public ObservableCollection<KeyValuePair<string, string>> VM_Logs
+        {
+            get { return model.Logs; }
+            set
+            {
+                model.Logs = value;
+                NotifyPropertyChanged("VM_Logs");
+            }
+        }
     }
 }
