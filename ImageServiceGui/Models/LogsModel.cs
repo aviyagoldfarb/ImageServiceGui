@@ -18,7 +18,7 @@ namespace ImageServiceGui.Models
         private ITcpClient tcpClient;
         private volatile Boolean stop;
 
-        private ObservableCollection<KeyValuePair<string, string>> logs/* = new ObservableCollection<KeyValuePair<string, string>>()*/;
+        private ObservableCollection<KeyValuePair<string, string>> logs;
         public ObservableCollection<KeyValuePair<string, string>> Logs
         {
             get { return logs; }
@@ -33,6 +33,11 @@ namespace ImageServiceGui.Models
         {
             this.tcpClient = tcpClient;
             stop = false;
+            logs = new ObservableCollection<KeyValuePair<string, string>>();
+            logs.Add(new KeyValuePair<string, string>("Type1", "Message1"));
+            logs.Add(new KeyValuePair<string, string>("Type2", "Message2"));
+            logs.Add(new KeyValuePair<string, string>("Type3", "Message3"));
+            logs.Add(new KeyValuePair<string, string>("Type4", "Message4"));
         }
 
         public void NotifyPropertyChanged(string propName)
