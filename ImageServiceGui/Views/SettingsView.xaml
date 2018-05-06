@@ -6,38 +6,10 @@
              xmlns:local="clr-namespace:ImageServiceGui"
              mc:Ignorable="d" 
              d:DesignHeight="360" d:DesignWidth="800">
-    <Grid Background ="White"  TextBlock.FontSize="20">
+    <Grid Background ="White" TextBlock.FontSize="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Settings" Foreground="Blue" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2" Name="settings"/>
-
-        <TextBlock Grid.Row="1" Padding="3" Margin="3">Output Directory:</TextBlock>
-        
-        <TextBox x:Name="txtMazeName" Grid.Row="2" Grid.Column="2" Padding="3" Margin="3"></TextBox>
-
-        <TextBlock Grid.Row="2" Padding="3" Margin="3">Source Name:</TextBlock>
-        
-        <TextBox x:Name="txtRows" Grid.Row="3" Grid.Column="2" Padding="3" Margin="3"></TextBox>
-
-        <TextBlock Grid.Row="3" Padding="3" Margin="3">Log Name:</TextBlock>
-        
-        <TextBox x:Name="txtCols" Grid.Row="5" Grid.Column="2" Padding="3" Margin="3"></TextBox>
-
-        <TextBlock Grid.Row="4" Padding="3" Margin="3">Thumbnail Size:</TextBlock>
-
-        <Button x:Name="btnStart" Grid.Row="5" HorizontalAlignment="Center" Grid.ColumnSpan="2" Click="btnStart_Click" Margin="5" Padding="5">Start Game</Button>
-    
-        
+        <ListBox Margin="4" ItemsSource="{Binding VM_Settings}" />
     </Grid>
 </UserControl>

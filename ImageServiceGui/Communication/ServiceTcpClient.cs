@@ -12,16 +12,37 @@ namespace ImageServiceGui.Communication
     class ServiceTcpClient : ITcpClient
     {
         //private IPEndPoint ep;
-        private TcpClient client;
+        //private TcpClient client;
+        TcpClient client;
+        //this.client = new TcpClient();
 
+        private static ServiceTcpClient instance;
+
+        private ServiceTcpClient() { }
+
+        public static ServiceTcpClient Instance
+        {
+        get
+            {
+                if (instance == null)
+                {
+                    instance = new ServiceTcpClient();
+                }
+                return instance;
+            }
+        }
+        /**
         public ServiceTcpClient()
         {
             //IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-            TcpClient client = new TcpClient();
+            //this.client = new TcpClient("127.0.0.1", 8000);
+            //TcpClient client = new TcpClient();
+            this.client = new TcpClient();
         }
-
+*/
         public void Connect(string ip, int port)
         {
+            
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
             client.Connect(ep);
             Console.WriteLine("You are connected");

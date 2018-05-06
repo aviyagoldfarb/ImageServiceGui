@@ -28,15 +28,10 @@ namespace ImageServiceGui.ViewModels
                     NotifyPropertyChanged("VM_" + e.PropertyName);
                 }; 
         }
-        private ObservableCollection<KeyValuePair<string, string>> vm_logs/* = new ObservableCollection<KeyValuePair<string, string>>()*/;
+        private ObservableCollection<KeyValuePair<string, string>> vm_logs;
         public ObservableCollection<KeyValuePair<string, string>> VM_Logs
         {
             get { return model.Logs; }
-            set
-            {
-                model.Logs = value;
-                NotifyPropertyChanged("VM_Logs");
-            }
         }
     }
 }
