@@ -44,8 +44,12 @@ namespace ImageServiceGui.Models
         {
             this.tcpClient = tcpClient;
             stop = false;
+            handlers = new ObservableCollection<string>();
             settings = new ObservableCollection<KeyValuePair<string, string>>();
-            settings.Add(new KeyValuePair<string, string>("Handler", @"C:\Users\hana\Desktop\listened_folder1;C:\Users\hana\Desktop\listened_folder2"));
+
+            handlers.Add((@"C:\Users\hana\Desktop\listened_folder1"));
+            handlers.Add((@"C:\Users\hana\Desktop\listened_folder2"));
+
             settings.Add(new KeyValuePair<string, string>("OutputDir" ,@"C:\Users\hana\Desktop\OutputDir"));
             settings.Add(new KeyValuePair<string, string>("SourceName" ,@"ImageServiceSource"));
             settings.Add(new KeyValuePair<string, string>("LogName" ,@"ImageServiceLog"));
