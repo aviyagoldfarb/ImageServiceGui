@@ -9,7 +9,27 @@
     <Grid Background ="White" TextBlock.FontSize="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListBox Margin="4" ItemsSource="{Binding VM_Settings}" />
+        <TextBlock Text="Settings" FontSize="40" Foreground="Blue" FontWeight="Bold" Margin="4" HorizontalAlignment="Center"/>
+        <ListBox Grid.Row="1" Margin="4" ItemsSource="{Binding VM_Settings}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock FontWeight="Bold" Text="{Binding Key, StringFormat= '\{0\}:'}"/>
+                        <TextBlock Grid.Column="1"  Text="{Binding Value}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Name="btnRemove" Grid.Row="2" HorizontalAlignment="Stretch" Click="btnRemove_Click" Margin="4" Padding="5">Remove</Button>
     </Grid>
 </UserControl>

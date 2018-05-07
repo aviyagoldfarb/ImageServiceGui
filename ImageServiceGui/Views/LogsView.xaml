@@ -9,7 +9,9 @@
     <Grid Background ="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListBox Margin="4" ItemsSource="{Binding VM_Logs}" />
+        <TextBlock Text="Logs" FontSize="40" Foreground="Blue" FontWeight="Bold" Margin="4" HorizontalAlignment="Center"/>
+        <ListBox Grid.Row="1" Margin="4" ItemsSource="{Binding VM_Logs}" />
     </Grid>
 </UserControl>

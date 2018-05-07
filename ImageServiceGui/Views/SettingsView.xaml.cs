@@ -30,5 +30,10 @@ namespace ImageServiceGui
             vm = new SettingsViewModel(new SettingsModel(new ServiceTcpClient()));
             DataContext = vm;
         }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
