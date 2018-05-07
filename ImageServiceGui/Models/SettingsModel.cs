@@ -29,6 +29,17 @@ namespace ImageServiceGui.Models
             }
         }
 
+        private ObservableCollection<string> handlers;
+        public ObservableCollection<string> Handlers
+        {
+            get { return handlers; }
+            set
+            {
+                handlers = value;
+                NotifyPropertyChanged("Handlers");
+            }
+        }
+
         public SettingsModel(ITcpClient tcpClient)
         {
             this.tcpClient = tcpClient;

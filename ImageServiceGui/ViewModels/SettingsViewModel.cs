@@ -34,6 +34,10 @@ namespace ImageServiceGui.ViewModels
         {
             get { return model.Settings; }
         }
-
+        private ObservableCollection<string> handlers;
+        public ObservableCollection<string> Handlers
+        {
+            get { return model.Handlers; }
+        }
     }
 }

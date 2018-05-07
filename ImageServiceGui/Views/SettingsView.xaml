@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Settings" FontSize="40" Foreground="Blue" FontWeight="Bold" Margin="4" HorizontalAlignment="Center"/>
         <ListBox Grid.Row="1" Margin="4" ItemsSource="{Binding VM_Settings}">
@@ -31,5 +32,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Name="btnRemove" Grid.Row="2" HorizontalAlignment="Stretch" Click="btnRemove_Click" Margin="4" Padding="5">Remove</Button>
+        <ListBox Grid.Row="3" ItemsSource="{Binding VM_Handlers}"/>
     </Grid>
 </UserControl>
