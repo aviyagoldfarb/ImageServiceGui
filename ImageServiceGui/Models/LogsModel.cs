@@ -36,8 +36,8 @@ namespace ImageServiceGui.Models
             logs = new ObservableCollection<KeyValuePair<string, string>>();
             logs.Add(new KeyValuePair<string, string>("INFO", "Message1"));
             logs.Add(new KeyValuePair<string, string>("INFO", "Message2"));
-            logs.Add(new KeyValuePair<string, string>("ERROR ", "Message3"));
-            logs.Add(new KeyValuePair<string, string>("WARNING ", "Message4"));
+            logs.Add(new KeyValuePair<string, string>("ERROR", "Message3"));
+            logs.Add(new KeyValuePair<string, string>("WARNING", "Message4"));
         }
 
         public void NotifyPropertyChanged(string propName)

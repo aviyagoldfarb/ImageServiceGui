@@ -17,7 +17,7 @@ namespace ImageServiceGui.Communication
         public ServiceTcpClient()
         {
             //IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-            TcpClient client = new TcpClient();
+            this.client = new TcpClient();
         }
 
         public void Connect(string ip, int port)
