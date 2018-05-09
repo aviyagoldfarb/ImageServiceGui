@@ -14,17 +14,31 @@ namespace ImageServiceGui.Communication
         //private IPEndPoint ep;
         private TcpClient client;
 
-        public ServiceTcpClient()
+        private ServiceTcpClient()
         {
-            //IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
             this.client = new TcpClient();
+            this.client.Connect("127.0.0.1", 8000);
+        }
+
+        private static ServiceTcpClient instance;
+
+        public static ServiceTcpClient Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new ServiceTcpClient();
+                }
+                return instance;
+            }
         }
 
         public void Connect(string ip, int port)
         {
+            //IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
             client.Connect(ep);
-            Console.WriteLine("You are connected");
         }
 
         public void Write(string command)

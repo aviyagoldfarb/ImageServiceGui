@@ -27,7 +27,7 @@ namespace ImageServiceGui
         public SettingsView()
         {
             InitializeComponent();
-            vm = new SettingsViewModel(new SettingsModel(new ServiceTcpClient()));
+            vm = new SettingsViewModel(new SettingsModel());
             DataContext = vm;
             handlersList.ItemsSource = vm.VM_Handlers;
         }

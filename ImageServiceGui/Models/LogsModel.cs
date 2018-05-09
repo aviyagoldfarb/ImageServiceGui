@@ -29,9 +29,9 @@ namespace ImageServiceGui.Models
             }
         }
 
-        public LogsModel(ITcpClient tcpClient)
+        public LogsModel()
         {
-            this.tcpClient = tcpClient;
+            this.tcpClient = ServiceTcpClient.Instance;
             stop = false;
             logs = new ObservableCollection<KeyValuePair<string, string>>();
             logs.Add(new KeyValuePair<string, string>("INFO", "Message1"));
@@ -47,10 +47,10 @@ namespace ImageServiceGui.Models
         }
 
         // connection to the service 
-        public void Connect(string ip, int port)
-        {
-            tcpClient.Connect(ip, port);
-        }
+        //public void Connect(string ip, int port)
+        //{
+        //    tcpClient.Connect(ip, port);
+        //}
 
         public void Disconnect()
         {

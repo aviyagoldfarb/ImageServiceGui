@@ -40,10 +40,12 @@ namespace ImageServiceGui.Models
             }
         }
 
-        public SettingsModel(ITcpClient tcpClient)
+        public SettingsModel()
         {
-            this.tcpClient = tcpClient;
+            this.tcpClient = ServiceTcpClient.Instance;
             stop = false;
+
+            // Testing
             handlers = new ObservableCollection<string>();
             settings = new ObservableCollection<KeyValuePair<string, string>>();
 
@@ -64,10 +66,10 @@ namespace ImageServiceGui.Models
         }
 
         // connection to the service 
-        public void Connect(string ip, int port)
-        {
-            tcpClient.Connect(ip, port);
-        }
+        //public void Connect(string ip, int port)
+        //{
+        //    tcpClient.Connect(ip, port);
+        //}
 
         public void Disconnect()
         {
@@ -77,12 +79,27 @@ namespace ImageServiceGui.Models
 
         public void Start()
         {
+            string allInOne;
+            string[] configurations;
+            string[] keyAndValue;
+
+            settings.Clear();
+
             new Thread(delegate () {
                 while (!stop)
                 {
-                    //tcpClient.write("get left sonar");
-                    //LeftSonar = Double.Parse(tcpClient.read()); // the same for the other sensors properties
-                    //Thread.Sleep(250);// read the data in 4Hz
+                    tcpClient.Write("1 GetConfigCommand");
+                    allInOne = tcpClient.Read(); // the appConfig data in one string
+                    Thread.Sleep(250);// read the data in 4Hz
+
+                    configurations = allInOne.Split(' ');
+
+                    foreach (string config in configurations)
+                    {
+                        keyAndValue = config.Split('$');
+                        settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
+                    }
+                    continue;
                 }
             }).Start();
         }

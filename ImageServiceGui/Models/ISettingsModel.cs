@@ -14,7 +14,7 @@ namespace ImageServiceGui.Models
         ObservableCollection<string> Handlers { set; get; }
 
         // connection to the service 
-        void Connect(string ip, int port);
+        //void Connect(string ip, int port);
         void Disconnect();
         void Start();
 
