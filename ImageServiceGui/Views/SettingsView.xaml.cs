@@ -27,8 +27,17 @@ namespace ImageServiceGui
         public SettingsView()
         {
             InitializeComponent();
-            vm = new SettingsViewModel(new SettingsModel(new ServiceTcpClient()));
+            vm = new SettingsViewModel(new SettingsModel());
             DataContext = vm;
+            handlersList.ItemsSource = vm.VM_Handlers;
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (handlersList.SelectedItem != null)
+            {
+                vm.VM_Handlers.Remove(handlersList.SelectedItem as String);
+            }
         }
     }
 }

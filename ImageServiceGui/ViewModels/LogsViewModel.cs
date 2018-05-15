@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.ViewModels
 {
-    class LogsViewModel : INotifyPropertyChanged
+    public class LogsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -22,7 +22,7 @@ namespace ImageServiceGui.ViewModels
         public LogsViewModel(ILogsModel model)
         {
             this.model = model;
-            model.PropertyChanged += 
+            this.model.PropertyChanged += 
                 delegate (Object sender, PropertyChangedEventArgs e) 
                 {
                     NotifyPropertyChanged("VM_" + e.PropertyName);

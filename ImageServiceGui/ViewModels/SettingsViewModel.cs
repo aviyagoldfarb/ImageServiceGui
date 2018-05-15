@@ -6,10 +6,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ImageServiceGui.ViewModels
 {
-    class SettingsViewModel : INotifyPropertyChanged
+    public class SettingsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -22,7 +23,7 @@ namespace ImageServiceGui.ViewModels
         public SettingsViewModel(ISettingsModel model)
         {
             this.model = model;
-            model.PropertyChanged +=
+            this.model.PropertyChanged +=
                 delegate (Object sender, PropertyChangedEventArgs e)
                 {
                     NotifyPropertyChanged("VM_" + e.PropertyName);
@@ -33,6 +34,10 @@ namespace ImageServiceGui.ViewModels
         {
             get { return model.Settings; }
         }
-
+        private ObservableCollection<string> vm_handlers;
+        public ObservableCollection<string> VM_Handlers
+        {
+            get { return model.Handlers; }
+        }
     }
 }

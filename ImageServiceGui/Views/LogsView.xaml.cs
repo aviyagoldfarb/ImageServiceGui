@@ -27,7 +27,7 @@ namespace ImageServiceGui
         public LogsView()
         {
             InitializeComponent();
-            vm = new LogsViewModel(new LogsModel(new ServiceTcpClient()));
+            vm = new LogsViewModel(new LogsModel());
             DataContext = vm;
         }
     }

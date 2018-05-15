@@ -9,20 +9,22 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Communication
 {
-    class ServiceTcpClient : ITcpClient
+    public class ServiceTcpClient : ITcpClient
     {
         //private IPEndPoint ep;
-        //private TcpClient client;
-        TcpClient client;
-        //this.client = new TcpClient();
+        private TcpClient client;
+
+        private ServiceTcpClient()
+        {
+            this.client = new TcpClient();
+            this.client.Connect("127.0.0.1", 8000);
+        }
 
         private static ServiceTcpClient instance;
 
-        private ServiceTcpClient() { }
-
         public static ServiceTcpClient Instance
         {
-        get
+            get
             {
                 if (instance == null)
                 {
@@ -31,25 +33,16 @@ namespace ImageServiceGui.Communication
                 return instance;
             }
         }
-        /**
-        public ServiceTcpClient()
-        {
-            //IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-            //this.client = new TcpClient("127.0.0.1", 8000);
-            //TcpClient client = new TcpClient();
-            this.client = new TcpClient();
-        }
-*/
+
         public void Connect(string ip, int port)
         {
-            
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
-            client.Connect(ep);
-            Console.WriteLine("You are connected");
+            this.client.Connect(ep);
         }
 
         public void Write(string command)
         {
+            /*
             using (NetworkStream stream = client.GetStream())
             //using (BinaryReader reader = new BinaryReader(stream))
             using (BinaryWriter writer = new BinaryWriter(stream))
@@ -57,10 +50,16 @@ namespace ImageServiceGui.Communication
                 // Send data to server     
                 writer.Write(command);   
             }
+            */
+            NetworkStream stream = client.GetStream();
+            BinaryWriter writer = new BinaryWriter(stream);
+            // Send data to server     
+            writer.Write(command);
         }
 
         public string Read()
         {
+            /*
             using (NetworkStream stream = client.GetStream())
             using (BinaryReader reader = new BinaryReader(stream))
             //using (BinaryWriter writer = new BinaryWriter(stream))
@@ -69,6 +68,13 @@ namespace ImageServiceGui.Communication
                 string result = reader.ReadString();
                 return result;
             }
+            */
+            NetworkStream stream = client.GetStream();
+            BinaryReader reader = new BinaryReader(stream);
+            
+            // Get result from server
+            string result = reader.ReadString();
+            return result;
         }
 
         public void Disconnect()
