@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Models
 {
-    interface ILogsModel : INotifyPropertyChanged
+    public interface ILogsModel : INotifyPropertyChanged
     {
         ObservableCollection<KeyValuePair<string, string>> Logs { set; get; }
 

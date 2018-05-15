@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Models
 {
-    class SettingsModel : ISettingsModel
+    public class SettingsModel : ISettingsModel
     {
         //INotifyPropertyChanged implementation: 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,7 +48,7 @@ namespace ImageServiceGui.Models
             // Testing
             handlers = new ObservableCollection<string>();
             settings = new ObservableCollection<KeyValuePair<string, string>>();
-
+            /*
             handlers.Add((@"C:\Users\hana\Desktop\listened_folder1"));
             handlers.Add((@"C:\Users\hana\Desktop\listened_folder2"));
 
@@ -56,7 +56,8 @@ namespace ImageServiceGui.Models
             settings.Add(new KeyValuePair<string, string>("SourceName" ,@"ImageServiceSource"));
             settings.Add(new KeyValuePair<string, string>("LogName" ,@"ImageServiceLog"));
             settings.Add(new KeyValuePair<string, string>("ThumbnailSize" ,@"120"));
-
+            */
+            this.Start();
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -84,22 +85,27 @@ namespace ImageServiceGui.Models
             string[] keyAndValue;
 
             settings.Clear();
+            handlers.Clear();
+
+            var uiContext = SynchronizationContext.Current;
 
             new Thread(delegate () {
-                while (!stop)
+
+                tcpClient.Write("GetConfigCommand");
+                // the appConfig data in one string
+                allInOne = tcpClient.Read();
+                    
+                configurations = allInOne.Split(' ');
+
+                foreach (string config in configurations)
                 {
-                    tcpClient.Write("1 GetConfigCommand");
-                    allInOne = tcpClient.Read(); // the appConfig data in one string
-                    Thread.Sleep(250);// read the data in 4Hz
-
-                    configurations = allInOne.Split(' ');
-
-                    foreach (string config in configurations)
-                    {
-                        keyAndValue = config.Split('$');
-                        settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
+                    keyAndValue = config.Split('$');
+                    if (keyAndValue[0] == "Handler") {
+                        uiContext.Send(x => handlers.Add(keyAndValue[1]), null);
                     }
-                    continue;
+                    else
+                        uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
+                    //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
                 }
             }).Start();
         }

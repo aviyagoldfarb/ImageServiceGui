@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Models
 {
-    interface ISettingsModel : INotifyPropertyChanged
+    public interface ISettingsModel : INotifyPropertyChanged
     {
         ObservableCollection<KeyValuePair<string, string>> Settings { set; get; }
         ObservableCollection<string> Handlers { set; get; }

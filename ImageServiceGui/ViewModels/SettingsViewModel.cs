@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace ImageServiceGui.ViewModels
 {
-    class SettingsViewModel : INotifyPropertyChanged
+    public class SettingsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -23,7 +23,7 @@ namespace ImageServiceGui.ViewModels
         public SettingsViewModel(ISettingsModel model)
         {
             this.model = model;
-            model.PropertyChanged +=
+            this.model.PropertyChanged +=
                 delegate (Object sender, PropertyChangedEventArgs e)
                 {
                     NotifyPropertyChanged("VM_" + e.PropertyName);

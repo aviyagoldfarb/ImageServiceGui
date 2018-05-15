@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Models
 {
-    class LogsModel : ILogsModel
+    public class LogsModel : ILogsModel
     {
         //INotifyPropertyChanged implementation: 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,7 +36,7 @@ namespace ImageServiceGui.Models
             logs = new ObservableCollection<KeyValuePair<string, string>>();
             logs.Add(new KeyValuePair<string, string>("INFO", "Message1"));
             logs.Add(new KeyValuePair<string, string>("INFO", "Message2"));
-            logs.Add(new KeyValuePair<string, string>("ERROR", "Message3"));
+            logs.Add(new KeyValuePair<string, string>("FAIL", "Message3"));
             logs.Add(new KeyValuePair<string, string>("WARNING", "Message4"));
         }
 
@@ -60,12 +60,27 @@ namespace ImageServiceGui.Models
 
         public void Start()
         {
+            string allInOne;
+            string[] configurations;
+            string[] keyAndValue;
+
+            logs.Clear();
+
+            var uiContext = SynchronizationContext.Current;
+
             new Thread(delegate () {
-                while (!stop)
+
+                tcpClient.Write("GetConfigCommand");
+                // the appConfig data in one string
+                allInOne = tcpClient.Read();
+
+                configurations = allInOne.Split(' ');
+
+                foreach (string config in configurations)
                 {
-                    //tcpClient.write("get left sonar");
-                    //LeftSonar = Double.Parse(tcpClient.read()); // the same for the other sensors properties
-                    //Thread.Sleep(250);// read the data in 4Hz
+                    keyAndValue = config.Split('$');
+                    uiContext.Send(x => Logs.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
+                    //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
                 }
             }).Start();
         }

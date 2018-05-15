@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Communication
 {
-    class ServiceTcpClient : ITcpClient
+    public class ServiceTcpClient : ITcpClient
     {
         //private IPEndPoint ep;
         private TcpClient client;
@@ -36,13 +36,13 @@ namespace ImageServiceGui.Communication
 
         public void Connect(string ip, int port)
         {
-            //IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
-            client.Connect(ep);
+            this.client.Connect(ep);
         }
 
         public void Write(string command)
         {
+            /*
             using (NetworkStream stream = client.GetStream())
             //using (BinaryReader reader = new BinaryReader(stream))
             using (BinaryWriter writer = new BinaryWriter(stream))
@@ -50,10 +50,16 @@ namespace ImageServiceGui.Communication
                 // Send data to server     
                 writer.Write(command);   
             }
+            */
+            NetworkStream stream = client.GetStream();
+            BinaryWriter writer = new BinaryWriter(stream);
+            // Send data to server     
+            writer.Write(command);
         }
 
         public string Read()
         {
+            /*
             using (NetworkStream stream = client.GetStream())
             using (BinaryReader reader = new BinaryReader(stream))
             //using (BinaryWriter writer = new BinaryWriter(stream))
@@ -62,6 +68,13 @@ namespace ImageServiceGui.Communication
                 string result = reader.ReadString();
                 return result;
             }
+            */
+            NetworkStream stream = client.GetStream();
+            BinaryReader reader = new BinaryReader(stream);
+            
+            // Get result from server
+            string result = reader.ReadString();
+            return result;
         }
 
         public void Disconnect()

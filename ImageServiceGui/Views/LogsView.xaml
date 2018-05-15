@@ -23,7 +23,7 @@
                                     <Setter Property="Background" Value="Green" />
                                 </DataTrigger>
                                 <!--Background property set based on cell content-->
-                                <DataTrigger Binding="{Binding Path=Key}" Value="ERROR">
+                                <DataTrigger Binding="{Binding Path=Key}" Value="FAIL">
                                     <Setter Property="Background" Value="Red" />
                                 </DataTrigger>
                                 <!--Background property set based on cell content-->
