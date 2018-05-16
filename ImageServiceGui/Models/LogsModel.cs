@@ -33,11 +33,10 @@ namespace ImageServiceGui.Models
         {
             this.tcpClient = ServiceTcpClient.Instance;
             stop = false;
+
             logs = new ObservableCollection<KeyValuePair<string, string>>();
-            logs.Add(new KeyValuePair<string, string>("INFO", "Message1"));
-            logs.Add(new KeyValuePair<string, string>("INFO", "Message2"));
-            logs.Add(new KeyValuePair<string, string>("FAIL", "Message3"));
-            logs.Add(new KeyValuePair<string, string>("WARNING", "Message4"));
+            
+            this.Start();
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -45,12 +44,6 @@ namespace ImageServiceGui.Models
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-
-        // connection to the service 
-        //public void Connect(string ip, int port)
-        //{
-        //    tcpClient.Connect(ip, port);
-        //}
 
         public void Disconnect()
         {
@@ -61,7 +54,7 @@ namespace ImageServiceGui.Models
         public void Start()
         {
             string allInOne;
-            string[] configurations;
+            string[] entireLog;
             string[] keyAndValue;
 
             logs.Clear();
@@ -70,16 +63,31 @@ namespace ImageServiceGui.Models
 
             new Thread(delegate () {
 
-                tcpClient.Write("GetConfigCommand");
+                tcpClient.Write("LogCommand");
                 // the appConfig data in one string
                 allInOne = tcpClient.Read();
 
-                configurations = allInOne.Split(' ');
+                entireLog = allInOne.Split('\n');
 
-                foreach (string config in configurations)
+                foreach (string entry in entireLog)
                 {
-                    keyAndValue = config.Split('$');
-                    uiContext.Send(x => Logs.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
+                    keyAndValue = entry.Split('$');
+                    string key = "";
+                    switch (keyAndValue[0])
+                    {
+                        case "Information":
+                            key += "INFO";
+                            break;
+                        case "Warning":
+                            key += "WARNING";
+                            break;
+                        case "FailureAudit":
+                            key += "FAIL";
+                            break;
+                    }
+                    if (key == "")
+                        break;
+                    uiContext.Send(x => Logs.Add(new KeyValuePair<string, string>(key, keyAndValue[1])), null);
                     //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
                 }
             }).Start();

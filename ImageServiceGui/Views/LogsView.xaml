@@ -6,36 +6,40 @@
              xmlns:local="clr-namespace:ImageServiceGui"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background ="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Logs" FontSize="40" Foreground="Blue" FontWeight="Bold" Margin="4" HorizontalAlignment="Center"/>
-        <DataGrid Name="dgLogs" Grid.Row="1" ItemsSource="{Binding VM_Logs}" AutoGenerateColumns="False" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" Binding="{Binding Key}">
-                    <DataGridTextColumn.CellStyle>
-                        <Style TargetType="{x:Type DataGridCell}">
-                            <Style.Triggers>
-                                <!--Background property set based on cell content-->
-                                <DataTrigger Binding="{Binding Path=Key}" Value="INFO">
-                                    <Setter Property="Background" Value="Green" />
-                                </DataTrigger>
-                                <!--Background property set based on cell content-->
-                                <DataTrigger Binding="{Binding Path=Key}" Value="FAIL">
-                                    <Setter Property="Background" Value="Red" />
-                                </DataTrigger>
-                                <!--Background property set based on cell content-->
-                                <DataTrigger Binding="{Binding Path=Key}" Value="WARNING">
-                                    <Setter Property="Background" Value="Yellow" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGridTextColumn.CellStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Message" Binding="{Binding Value}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+    <ScrollViewer>
+        <StackPanel>
+            <Grid Background ="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Logs" FontSize="40" Foreground="Blue" FontWeight="Bold" Margin="4" HorizontalAlignment="Center"/>
+                <DataGrid Name="dgLogs" Grid.Row="1" ItemsSource="{Binding VM_Logs}" AutoGenerateColumns="False" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Type" Binding="{Binding Key}">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <!--Background property set based on cell content-->
+                                        <DataTrigger Binding="{Binding Path=Key}" Value="INFO">
+                                            <Setter Property="Background" Value="Green" />
+                                        </DataTrigger>
+                                        <!--Background property set based on cell content-->
+                                        <DataTrigger Binding="{Binding Path=Key}" Value="FAIL">
+                                            <Setter Property="Background" Value="Red" />
+                                        </DataTrigger>
+                                        <!--Background property set based on cell content-->
+                                        <DataTrigger Binding="{Binding Path=Key}" Value="WARNING">
+                                            <Setter Property="Background" Value="Yellow" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Message" Binding="{Binding Value}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

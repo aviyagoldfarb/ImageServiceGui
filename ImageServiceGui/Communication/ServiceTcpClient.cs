@@ -17,7 +17,7 @@ namespace ImageServiceGui.Communication
         private ServiceTcpClient()
         {
             this.client = new TcpClient();
-            this.client.Connect("127.0.0.1", 8000);
+            this.client.Connect("127.0.0.1", 7500);
         }
 
         private static ServiceTcpClient instance;
