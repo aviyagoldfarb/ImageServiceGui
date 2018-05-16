@@ -43,12 +43,12 @@ namespace ImageServiceGui.Models
         public SettingsModel()
         {
             this.tcpClient = ServiceTcpClient.Instance;
-            stop = false;
+            this.stop = false;
 
             // Testing
             handlers = new ObservableCollection<string>();
             settings = new ObservableCollection<KeyValuePair<string, string>>();
-            
+
             this.Start();
         }
 
@@ -78,6 +78,35 @@ namespace ImageServiceGui.Models
 
             new Thread(delegate () {
 
+                try
+                {
+                    tcpClient.Write("GetConfigCommand");
+                    // the appConfig data in one string
+                    allInOne = tcpClient.Read();
+
+                    configurations = allInOne.Split(' ');
+
+                    foreach (string config in configurations)
+                    {
+                        keyAndValue = config.Split('$');
+                        if (keyAndValue[0] == "Handler")
+                        {
+                            handlersList = keyAndValue[1].Split(';');
+                            foreach (string handler in handlersList)
+                            {
+                                uiContext.Send(x => handlers.Add(handler), null);
+                            }
+                        }
+                        else
+                            uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
+                        //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+                /*
                 tcpClient.Write("GetConfigCommand");
                 // the appConfig data in one string
                 allInOne = tcpClient.Read();
@@ -97,6 +126,7 @@ namespace ImageServiceGui.Models
                         uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
                     //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
                 }
+                */
             }).Start();
         }
     }

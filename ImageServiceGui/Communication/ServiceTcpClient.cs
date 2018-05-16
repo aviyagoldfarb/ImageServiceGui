@@ -17,7 +17,15 @@ namespace ImageServiceGui.Communication
         private ServiceTcpClient()
         {
             this.client = new TcpClient();
-            this.client.Connect("127.0.0.1", 7500);
+            try
+            {
+                this.client.Connect("127.0.0.1", 7500);
+            }
+            catch (SocketException)
+            {
+
+            }
+            //this.client.Connect("127.0.0.1", 7500);
         }
 
         private static ServiceTcpClient instance;
@@ -40,17 +48,13 @@ namespace ImageServiceGui.Communication
             this.client.Connect(ep);
         }
 
+        public bool Connected()
+        {
+            return this.client.Connected;
+        }
+
         public void Write(string command)
         {
-            /*
-            using (NetworkStream stream = client.GetStream())
-            //using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
-            {
-                // Send data to server     
-                writer.Write(command);   
-            }
-            */
             NetworkStream stream = client.GetStream();
             BinaryWriter writer = new BinaryWriter(stream);
             // Send data to server     
@@ -59,16 +63,6 @@ namespace ImageServiceGui.Communication
 
         public string Read()
         {
-            /*
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            //using (BinaryWriter writer = new BinaryWriter(stream))
-            {
-                // Get result from server
-                string result = reader.ReadString();
-                return result;
-            }
-            */
             NetworkStream stream = client.GetStream();
             BinaryReader reader = new BinaryReader(stream);
             

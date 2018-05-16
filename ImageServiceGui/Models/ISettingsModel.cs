@@ -12,9 +12,7 @@ namespace ImageServiceGui.Models
     {
         ObservableCollection<KeyValuePair<string, string>> Settings { set; get; }
         ObservableCollection<string> Handlers { set; get; }
-
-        // connection to the service 
-        //void Connect(string ip, int port);
+        
         void Disconnect();
         void Start();
 

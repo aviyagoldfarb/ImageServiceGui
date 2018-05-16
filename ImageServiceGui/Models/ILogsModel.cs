@@ -12,8 +12,6 @@ namespace ImageServiceGui.Models
     {
         ObservableCollection<KeyValuePair<string, string>> Logs { set; get; }
 
-        // connection to the service 
-        //void Connect(string ip, int port);
         void Disconnect();
         void Start();
 
