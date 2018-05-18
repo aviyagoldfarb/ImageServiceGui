@@ -30,4 +30,23 @@ namespace ImageServiceGui
             DataContext = vm;
         }
     }
+
+
+
+    public class ConnectionToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (targetType != typeof(Brush))
+                throw new InvalidOperationException("Must convert to a brush!");
+            bool connected = (bool)value;
+            return connected == false ? Brushes.Gray : Brushes.White;
+        }
+        
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+        
+    }
 }

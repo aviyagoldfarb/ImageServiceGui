@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:ImageServiceGui"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="800">
-    <Grid Background="{Binding }">
+    <Window.Resources>
+        <local:ConnectionToColorConverter x:Key="ConnectionToColorConverter" />
+    </Window.Resources>
+    <Grid Background="{Binding Path=VM_IsConnected, Converter={StaticResource ConnectionToColorConverter}}">
         <TabControl>
             <TabItem Header="Settings" Height="40" Width="80">
                 <local:SettingsView x:Name="SettingsView">
