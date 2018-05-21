@@ -40,6 +40,17 @@ namespace ImageServiceGui.Models
             }
         }
 
+        private string selectedHandler;
+        public string SelectedHandler
+        {
+            get { return selectedHandler; }
+            set
+            {
+                selectedHandler = value;
+                NotifyPropertyChanged("SelectedHandler");
+            }
+        }
+
         public SettingsModel()
         {
             this.tcpClient = ServiceTcpClient.Instance;
@@ -106,28 +117,27 @@ namespace ImageServiceGui.Models
                 {
 
                 }
-                /*
-                tcpClient.Write("GetConfigCommand");
-                // the appConfig data in one string
-                allInOne = tcpClient.Read();
-                    
-                configurations = allInOne.Split(' ');
-
-                foreach (string config in configurations)
-                {
-                    keyAndValue = config.Split('$');
-                    if (keyAndValue[0] == "Handler") {
-                        handlersList = keyAndValue[1].Split(';');
-                        foreach (string handler in handlersList) {
-                            uiContext.Send(x => handlers.Add(handler), null);
-                        }
-                    }
-                    else
-                        uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
-                    //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
-                }
-                */
             }).Start();
         }
+
+        public void RemoveHandler(string handlerPath)
+        {
+            //throw new NotImplementedException();
+            //int msg = (int)Infrastructure.Enums.CommandEnum.CloseCommand;
+            //this.client.SendData(msg.ToString() + " " + this.ChosenHandler);
+            
+            new Thread(delegate () {
+
+                try
+                {
+                    tcpClient.Write("RemoveCommand" + " " + this.SelectedHandler);
+                }
+                catch (Exception)
+                {
+
+                }
+            }).Start();
+        }
+
     }
 }

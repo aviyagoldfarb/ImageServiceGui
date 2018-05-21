@@ -12,9 +12,11 @@ namespace ImageServiceGui.Models
     {
         ObservableCollection<KeyValuePair<string, string>> Settings { set; get; }
         ObservableCollection<string> Handlers { set; get; }
-        
+        string SelectedHandler { set; get; }
+
         void Disconnect();
         void Start();
+        void RemoveHandler(string handlerPath);
 
     }
 }

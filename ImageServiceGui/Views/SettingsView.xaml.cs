@@ -29,9 +29,9 @@ namespace ImageServiceGui
             InitializeComponent();
             vm = new SettingsViewModel(new SettingsModel());
             DataContext = vm;
-            handlersList.ItemsSource = vm.VM_Handlers;
+            //handlersList.ItemsSource = vm.VM_Handlers;
         }
-
+        /*
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
             if (handlersList.SelectedItem != null)
@@ -39,5 +39,6 @@ namespace ImageServiceGui
                 vm.VM_Handlers.Remove(handlersList.SelectedItem as String);
             }
         }
+        */
     }
 }
