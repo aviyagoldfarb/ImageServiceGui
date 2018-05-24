@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageServiceGui.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,15 @@ namespace ImageServiceGui.Communication
 {
     interface ITcpClient
     {
-        void Connect(string ip, int port);
+        event EventHandler<MessageEventArgs> ConfigRecieved;
+        event EventHandler<MessageEventArgs> LogUdated;
+        event EventHandler<MessageEventArgs> RemovedHandler;
+
+        //void Connect(string ip, int port);
         bool Connected();
         void Write(string command);
-        string Read();  // blocking call 
+        //string Read();  // blocking call
+        void Read();  // blocking call
         void Disconnect();
     }
 }

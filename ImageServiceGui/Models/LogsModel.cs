@@ -1,4 +1,5 @@
 ﻿using ImageServiceGui.Communication;
+using ImageServiceGui.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,6 +35,8 @@ namespace ImageServiceGui.Models
             this.tcpClient = ServiceTcpClient.Instance;
             this.stop = false;
 
+            this.tcpClient.LogUdated += OnLogUpdated;
+
             logs = new ObservableCollection<KeyValuePair<string, string>>();
             
             this.Start();
@@ -53,6 +56,18 @@ namespace ImageServiceGui.Models
 
         public void Start()
         {
+            tcpClient.Write("LogCommand");
+            /*
+            try
+            {
+                tcpClient.Write("LogCommand");
+            }
+            catch (Exception)
+            {
+
+            }
+            */
+            /*
             string allInOne;
             string[] entireLog;
             string[] keyAndValue;
@@ -66,6 +81,7 @@ namespace ImageServiceGui.Models
                 try
                 {
                     tcpClient.Write("LogCommand");
+                    
                     // the appConfig data in one string
                     allInOne = tcpClient.Read();
 
@@ -92,41 +108,46 @@ namespace ImageServiceGui.Models
                         uiContext.Send(x => Logs.Add(new KeyValuePair<string, string>(key, keyAndValue[1])), null);
                         //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
                     }
+                    
                 }
                 catch (Exception)
                 {
 
-                }
-                /*
-                tcpClient.Write("LogCommand");
-                // the appConfig data in one string
-                allInOne = tcpClient.Read();
-
-                entireLog = allInOne.Split('\n');
-
-                foreach (string entry in entireLog)
-                {
-                    keyAndValue = entry.Split('$');
-                    string key = "";
-                    switch (keyAndValue[0])
-                    {
-                        case "Information":
-                            key += "INFO";
-                            break;
-                        case "Warning":
-                            key += "WARNING";
-                            break;
-                        case "FailureAudit":
-                            key += "FAIL";
-                            break;
-                    }
-                    if (key == "")
-                        break;
-                    uiContext.Send(x => Logs.Add(new KeyValuePair<string, string>(key, keyAndValue[1])), null);
-                    //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
-                }
-                */
+                }                
             }).Start();
+            */
+        }
+
+        public void OnLogUpdated(object sender, MessageEventArgs msg)
+        {
+            string allInOne = msg.Message;
+            string[] entireLog;
+            string[] keyAndValue;
+
+            entireLog = allInOne.Split('\n');
+
+            foreach (string entry in entireLog)
+            {
+                keyAndValue = entry.Split('$');
+                string key = "";
+                switch (keyAndValue[0])
+                {
+                    case "Information":
+                        key += "INFO";
+                        break;
+                    case "Warning":
+                        key += "WARNING";
+                        break;
+                    case "FailureAudit":
+                        key += "FAIL";
+                        break;
+                }
+                if (key == "")
+                    break;
+                App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {                    
+                    Logs.Add(new KeyValuePair<string, string>(key, keyAndValue[1]));
+                });                
+            }
         }
     }
 }

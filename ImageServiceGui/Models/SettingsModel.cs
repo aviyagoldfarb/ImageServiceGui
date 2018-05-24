@@ -1,4 +1,5 @@
 ﻿using ImageServiceGui.Communication;
+using ImageServiceGui.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -56,6 +57,9 @@ namespace ImageServiceGui.Models
             this.tcpClient = ServiceTcpClient.Instance;
             this.stop = false;
 
+            this.tcpClient.ConfigRecieved += OnConfigRecieved;
+            this.tcpClient.RemovedHandler += OnRemovedHandler;
+
             // Testing
             handlers = new ObservableCollection<string>();
             settings = new ObservableCollection<KeyValuePair<string, string>>();
@@ -77,6 +81,18 @@ namespace ImageServiceGui.Models
 
         public void Start()
         {
+            tcpClient.Write("GetConfigCommand");
+            /*
+            try
+            {
+                tcpClient.Write("GetConfigCommand");
+            }
+            catch (Exception)
+            {
+
+            }
+            */
+            /*
             string allInOne;
             string[] configurations;
             string[] keyAndValue;
@@ -92,6 +108,7 @@ namespace ImageServiceGui.Models
                 try
                 {
                     tcpClient.Write("GetConfigCommand");
+                    
                     // the appConfig data in one string
                     allInOne = tcpClient.Read();
 
@@ -112,6 +129,23 @@ namespace ImageServiceGui.Models
                             uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
                         //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
                     }
+                    
+                }
+                catch (Exception)
+                {
+
+                }
+            }).Start();
+            */
+        }
+
+        public void RemoveHandler(string handlerPath)
+        {
+            new Thread(delegate () {
+
+                try
+                {
+                    tcpClient.Write("RemoveHandler" + " " + this.SelectedHandler);
                 }
                 catch (Exception)
                 {
@@ -120,23 +154,54 @@ namespace ImageServiceGui.Models
             }).Start();
         }
 
-        public void RemoveHandler(string handlerPath)
+        public void OnConfigRecieved(object sender, MessageEventArgs msg)
         {
-            //throw new NotImplementedException();
-            //int msg = (int)Infrastructure.Enums.CommandEnum.CloseCommand;
-            //this.client.SendData(msg.ToString() + " " + this.ChosenHandler);
-            
-            new Thread(delegate () {
+            string allInOne = msg.Message;
+            string[] configurations;
+            string[] keyAndValue;
+            string[] handlersList;
 
-                try
-                {
-                    tcpClient.Write("RemoveCommand" + " " + this.SelectedHandler);
-                }
-                catch (Exception)
-                {
+            configurations = allInOne.Split('\n');
 
+            foreach (string config in configurations)
+            {
+                keyAndValue = config.Split('$');
+                if (keyAndValue[0] == "Handler")
+                {
+                    handlersList = keyAndValue[1].Split(';');
+                    foreach (string handler in handlersList)
+                    {
+                        if (handler != "")
+                        {
+                            App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
+                                Handlers.Add(handler);
+                            });
+                        }
+                        //App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
+                        //    Handlers.Add(handler);
+                        //});
+                        //uiContext.Send(x => handlers.Add(handler), null);
+                    }
                 }
-            }).Start();
+                else
+                    App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
+                        Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
+                    });
+                    //uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
+            }
+        }
+
+        public void OnRemovedHandler(object sender, MessageEventArgs msg)
+        {
+            string path = msg.Message;
+            if (this.Handlers.Contains(path))
+            {
+                //this.Handlers.Remove(path);
+                App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
+                    this.Handlers.Remove(path);
+                });
+                //NotifyPropertyChanged("Handlers");
+            }
         }
 
     }
