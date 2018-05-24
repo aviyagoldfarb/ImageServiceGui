@@ -60,7 +60,6 @@ namespace ImageServiceGui.Models
             this.tcpClient.ConfigRecieved += OnConfigRecieved;
             this.tcpClient.RemovedHandler += OnRemovedHandler;
 
-            // Testing
             handlers = new ObservableCollection<string>();
             settings = new ObservableCollection<KeyValuePair<string, string>>();
 
@@ -82,61 +81,6 @@ namespace ImageServiceGui.Models
         public void Start()
         {
             tcpClient.Write("GetConfigCommand");
-            /*
-            try
-            {
-                tcpClient.Write("GetConfigCommand");
-            }
-            catch (Exception)
-            {
-
-            }
-            */
-            /*
-            string allInOne;
-            string[] configurations;
-            string[] keyAndValue;
-            string[] handlersList;
-
-            settings.Clear();
-            handlers.Clear();
-
-            var uiContext = SynchronizationContext.Current;
-
-            new Thread(delegate () {
-
-                try
-                {
-                    tcpClient.Write("GetConfigCommand");
-                    
-                    // the appConfig data in one string
-                    allInOne = tcpClient.Read();
-
-                    configurations = allInOne.Split(' ');
-
-                    foreach (string config in configurations)
-                    {
-                        keyAndValue = config.Split('$');
-                        if (keyAndValue[0] == "Handler")
-                        {
-                            handlersList = keyAndValue[1].Split(';');
-                            foreach (string handler in handlersList)
-                            {
-                                uiContext.Send(x => handlers.Add(handler), null);
-                            }
-                        }
-                        else
-                            uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
-                        //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
-                    }
-                    
-                }
-                catch (Exception)
-                {
-
-                }
-            }).Start();
-            */
         }
 
         public void RemoveHandler(string handlerPath)
@@ -173,21 +117,16 @@ namespace ImageServiceGui.Models
                     {
                         if (handler != "")
                         {
-                            App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
+                            App.Current.Dispatcher.Invoke((Action)delegate {
                                 Handlers.Add(handler);
                             });
                         }
-                        //App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
-                        //    Handlers.Add(handler);
-                        //});
-                        //uiContext.Send(x => handlers.Add(handler), null);
                     }
                 }
                 else
-                    App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
+                    App.Current.Dispatcher.Invoke((Action)delegate {
                         Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
                     });
-                    //uiContext.Send(x => Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1])), null);
             }
         }
 
@@ -196,8 +135,7 @@ namespace ImageServiceGui.Models
             string path = msg.Message;
             if (this.Handlers.Contains(path))
             {
-                //this.Handlers.Remove(path);
-                App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {
+                App.Current.Dispatcher.Invoke((Action)delegate {
                     this.Handlers.Remove(path);
                 });
                 //NotifyPropertyChanged("Handlers");

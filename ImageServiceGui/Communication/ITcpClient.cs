@@ -13,11 +13,9 @@ namespace ImageServiceGui.Communication
         event EventHandler<MessageEventArgs> LogUdated;
         event EventHandler<MessageEventArgs> RemovedHandler;
 
-        //void Connect(string ip, int port);
         bool Connected();
         void Write(string command);
-        //string Read();  // blocking call
-        void Read();  // blocking call
+        void Read();
         void Disconnect();
     }
 }

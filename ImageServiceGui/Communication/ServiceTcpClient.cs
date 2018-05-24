@@ -24,7 +24,6 @@ namespace ImageServiceGui.Communication
         private ServiceTcpClient()
         {
             this.client = new TcpClient();
-            //this.client.Connect("127.0.0.1", 8000);
             
             try
             {
@@ -51,55 +50,7 @@ namespace ImageServiceGui.Communication
                 return instance;
             }
         }
-        /*
-        public void Connect(string ip, int port)
-        {
-            try
-            {
-                IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
-                this.client.Connect(ep);
-                
-                new Task(() =>
-                {
-                    NetworkStream stream = client.GetStream();
-                    BinaryReader reader = new BinaryReader(stream);
-                    {
-                        while (true)
-                        {
-                            // Get result from server
-                            string result = reader.ReadString();
-                            ProcessAndSend(result);
-                        }
-                    }
-                }).Start();
-            }
-            catch (SocketException)
-            {
-
-            }
-            
-            //IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
-            //this.client.Connect(ep);
-            //this.stream = client.GetStream();
-            //this.Read();
-            
-        }
-        */
-
-
-        /*
-        public void Write(string command)
-        {
-            //NetworkStream stream = client.GetStream();
-            BinaryWriter writer = new BinaryWriter(stream);
-            // Send data to server     
-            writer.Write(command);
-            writer.Flush();
-        }
-        */
-
-
-
+        
         public void Write(string command)
         {
             
@@ -135,25 +86,21 @@ namespace ImageServiceGui.Communication
                 {
                     while (true)
                     {
-                        // Get result from server
-                        string result = reader.ReadString();
-                        ProcessAndSend(result);
+                        try
+                        {
+                            // Get result from server
+                            string result = reader.ReadString();
+                            ProcessAndSend(result);
+                        }
+                        catch (Exception)
+                        {
+                            break;
+                        }
+                        
                     }
                 }
             }).Start();
         }
-
-        /*
-        public string Read()
-        {
-            NetworkStream stream = client.GetStream();
-            BinaryReader reader = new BinaryReader(stream);
-            
-            // Get result from server
-            string result = reader.ReadString();
-            return result;
-        }
-        */
 
         public bool Connected()
         {

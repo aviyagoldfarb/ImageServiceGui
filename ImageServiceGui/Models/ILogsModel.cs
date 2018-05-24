@@ -14,6 +14,5 @@ namespace ImageServiceGui.Models
 
         void Disconnect();
         void Start();
-
     }
 }

@@ -17,6 +17,5 @@ namespace ImageServiceGui.Models
         void Disconnect();
         void Start();
         void RemoveHandler(string handlerPath);
-
     }
 }

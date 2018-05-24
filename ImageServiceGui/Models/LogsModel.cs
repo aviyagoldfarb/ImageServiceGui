@@ -57,65 +57,6 @@ namespace ImageServiceGui.Models
         public void Start()
         {
             tcpClient.Write("LogCommand");
-            /*
-            try
-            {
-                tcpClient.Write("LogCommand");
-            }
-            catch (Exception)
-            {
-
-            }
-            */
-            /*
-            string allInOne;
-            string[] entireLog;
-            string[] keyAndValue;
-
-            logs.Clear();
-
-            var uiContext = SynchronizationContext.Current;
-
-            new Thread(delegate () {
-
-                try
-                {
-                    tcpClient.Write("LogCommand");
-                    
-                    // the appConfig data in one string
-                    allInOne = tcpClient.Read();
-
-                    entireLog = allInOne.Split('\n');
-
-                    foreach (string entry in entireLog)
-                    {
-                        keyAndValue = entry.Split('$');
-                        string key = "";
-                        switch (keyAndValue[0])
-                        {
-                            case "Information":
-                                key += "INFO";
-                                break;
-                            case "Warning":
-                                key += "WARNING";
-                                break;
-                            case "FailureAudit":
-                                key += "FAIL";
-                                break;
-                        }
-                        if (key == "")
-                            break;
-                        uiContext.Send(x => Logs.Add(new KeyValuePair<string, string>(key, keyAndValue[1])), null);
-                        //Settings.Add(new KeyValuePair<string, string>(keyAndValue[0], keyAndValue[1]));
-                    }
-                    
-                }
-                catch (Exception)
-                {
-
-                }                
-            }).Start();
-            */
         }
 
         public void OnLogUpdated(object sender, MessageEventArgs msg)
@@ -144,7 +85,7 @@ namespace ImageServiceGui.Models
                 }
                 if (key == "")
                     break;
-                App.Current.Dispatcher./*Begin*/Invoke((Action)delegate {                    
+                App.Current.Dispatcher.Invoke((Action)delegate {                    
                     Logs.Add(new KeyValuePair<string, string>(key, keyAndValue[1]));
                 });                
             }
