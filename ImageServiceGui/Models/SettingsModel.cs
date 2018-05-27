@@ -51,7 +51,9 @@ namespace ImageServiceGui.Models
                 NotifyPropertyChanged("SelectedHandler");
             }
         }
-
+        /// <summary>
+        /// constructor.
+        /// </summary>
         public SettingsModel()
         {
             this.tcpClient = ServiceTcpClient.Instance;
@@ -65,24 +67,34 @@ namespace ImageServiceGui.Models
 
             this.Start();
         }
-
+        /// <summary>
+        /// notifying obout a change that happend in property.
+        /// </summary>
+        /// <param name="propName">the name of the property that has changed.</param>
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-
+        /// <summary>
+        /// closing the connection with the service.
+        /// </summary>
         public void Disconnect()
         {
             stop = true;
             tcpClient.Disconnect();
         }
-
+        /// <summary>
+        /// starting to get settings from the service.
+        /// </summary>
         public void Start()
         {
             tcpClient.Write("GetConfigCommand");
         }
-
+        /// <summary>
+        /// sending a command to remove a handler.
+        /// </summary>
+        /// <param name="handlerPath"> the path of the directory that handling by the handler that should to be remove</param>
         public void RemoveHandler(string handlerPath)
         {
             new Thread(delegate () {
@@ -97,7 +109,11 @@ namespace ImageServiceGui.Models
                 }
             }).Start();
         }
-
+        /// <summary>
+        /// receiving a configuration.
+        /// </summary>
+        /// <param name="sender">the sender of the massage</param>
+        /// <param name="msg">the configurations that reseived </param>
         public void OnConfigRecieved(object sender, MessageEventArgs msg)
         {
             string allInOne = msg.Message;
@@ -129,7 +145,11 @@ namespace ImageServiceGui.Models
                     });
             }
         }
-
+        /// <summary>
+        /// get and send a message that one handler is removed.
+        /// </summary>
+        /// <param name="sender">the sender.</param>
+        /// <param name="msg">the path of the handler.</param>
         public void OnRemovedHandler(object sender, MessageEventArgs msg)
         {
             string path = msg.Message;

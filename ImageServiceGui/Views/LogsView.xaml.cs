@@ -24,6 +24,9 @@ namespace ImageServiceGui
     public partial class LogsView : UserControl
     {
         LogsViewModel vm;
+        /// <summary>
+        /// constructor
+        /// </summary>
         public LogsView()
         {
             InitializeComponent();

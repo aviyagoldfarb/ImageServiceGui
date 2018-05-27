@@ -29,7 +29,9 @@ namespace ImageServiceGui.Models
                 NotifyPropertyChanged("Logs");
             }
         }
-
+        /// <summary>
+        /// constructor.
+        /// </summary>
         public LogsModel()
         {
             this.tcpClient = ServiceTcpClient.Instance;
@@ -41,24 +43,35 @@ namespace ImageServiceGui.Models
             
             this.Start();
         }
-
+        /// <summary>
+        /// notifying obout a change that happend in property.
+        /// </summary>
+        /// <param name="propName">the name of the property that has changed. </param>
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-
+        /// <summary>
+        /// closing the connection with the service.
+        /// </summary>
         public void Disconnect()
         {
             stop = true;
             tcpClient.Disconnect();
         }
-
+        /// <summary>
+        /// starting to get logs from the service.
+        /// </summary>
         public void Start()
         {
             tcpClient.Write("LogCommand");
         }
-
+        /// <summary>
+        /// updating with the messages that reseived from the servise.
+        /// </summary>
+        /// <param name="sender">the sender of the message</param>
+        /// <param name="msg">the message to log</param>
         public void OnLogUpdated(object sender, MessageEventArgs msg)
         {
             string allInOne = msg.Message;

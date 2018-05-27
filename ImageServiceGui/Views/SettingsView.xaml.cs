@@ -24,6 +24,9 @@ namespace ImageServiceGui
     public partial class SettingsView : UserControl
     {
         SettingsViewModel vm;
+        /// <summary>
+        /// constructor
+        /// </summary>
         public SettingsView()
         {
             InitializeComponent();

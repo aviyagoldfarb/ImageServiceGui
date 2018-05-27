@@ -23,7 +23,10 @@ namespace ImageServiceGui.ViewModels
         }
 
         private ISettingsModel model;
-
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="model">the settings model</param>
         public SettingsViewModel(ISettingsModel model)
         {
             this.model = model;

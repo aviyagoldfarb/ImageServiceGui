@@ -23,6 +23,9 @@ namespace ImageServiceGui
     public partial class MainWindow : Window
     {
         MainWindowViewModel vm;
+        /// <summary>
+        /// constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +35,9 @@ namespace ImageServiceGui
     }
 
 
-
+    /// <summary>
+    /// brush the color according to the connecting
+    /// </summary>
     public class ConnectionToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

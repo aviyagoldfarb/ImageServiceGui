@@ -25,13 +25,18 @@ namespace ImageServiceGui.Models
                 NotifyPropertyChanged("IsConnected");
             }
         }
-
+        /// <summary>
+        /// constructor.
+        /// </summary>
         public MainWindowModel()
         {
             this.tcpClient = ServiceTcpClient.Instance;
             isConnected = this.tcpClient.Connected();
         }
-
+        /// <summary>
+        /// notifying obout a change that happend in property.
+        /// </summary>
+        /// <param name="propName">the name of the property that has changed.</param>
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
